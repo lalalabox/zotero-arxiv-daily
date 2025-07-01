@@ -17,6 +17,7 @@ class ArxivPaper:
     def __init__(self,paper:arxiv.Result):
         self._paper = paper
         self.score = None
+        self.max_prompt_tokens = 3500
     
     @property
     def title(self) -> str:
@@ -171,7 +172,7 @@ class ArxivPaper:
         # use gpt-4o tokenizer for estimation
         enc = tiktoken.encoding_for_model("gpt-4o")
         prompt_tokens = enc.encode(prompt)
-        prompt_tokens = prompt_tokens[:4000]  # truncate to 4000 tokens
+        prompt_tokens = prompt_tokens[:self.max_prompt_tokens]  # truncate
         prompt = enc.decode(prompt_tokens)
         
         tldr = llm.generate(
@@ -204,7 +205,7 @@ class ArxivPaper:
             # use gpt-4o tokenizer for estimation
             enc = tiktoken.encoding_for_model("gpt-4o")
             prompt_tokens = enc.encode(prompt)
-            prompt_tokens = prompt_tokens[:4000]  # truncate to 4000 tokens
+            prompt_tokens = prompt_tokens[:self.max_prompt_tokens]  # truncate
             prompt = enc.decode(prompt_tokens)
             llm = get_llm()
             affiliations = llm.generate(
