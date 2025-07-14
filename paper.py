@@ -17,7 +17,7 @@ class ArxivPaper:
     def __init__(self,paper:arxiv.Result):
         self._paper = paper
         self.score = None
-        self.max_prompt_tokens = 3500
+        self.max_prompt_tokens = 5000
     
     @property
     def title(self) -> str:
